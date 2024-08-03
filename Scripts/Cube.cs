@@ -11,6 +11,13 @@ public class Cube : MonoBehaviour
 
     public event Action<Cube> Counted;
 
+    public void Reset()
+    {
+        _isTouched = false;
+
+        GetComponent<Renderer>().material.color = UnityEngine.Color.white;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (_isTouched == false)
@@ -20,7 +27,7 @@ public class Cube : MonoBehaviour
                 _isTouched = true;
 
                 GetComponent<Renderer>().material.color = UnityEngine.Random.ColorHSV();
-
+                
                 StartCoroutine();
             }
         }
@@ -35,6 +42,6 @@ public class Cube : MonoBehaviour
     {
         yield return new WaitForSeconds(UnityEngine.Random.Range(_minCount, _maxCount + 1));
         
-        Counted?.Invoke(gameObject.GetComponent<Cube>());
-    }
+        Counted?.Invoke(this);
+    }    
 }

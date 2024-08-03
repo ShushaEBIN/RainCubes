@@ -47,7 +47,7 @@ public class Spawner : MonoBehaviour
         cube.Counted += SendToPool;
 
         cube.transform.position = GetRandomPosition();
-        cube.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        cube.Reset();
         cube.gameObject.SetActive(true);
     }
 
@@ -69,7 +69,7 @@ public class Spawner : MonoBehaviour
 
     private void Delete(Cube cube)
     {
-        cube.Counted -= SendToPool;
+        cube.Counted -= SendToPool;        
 
         Destroy(cube);
     }
