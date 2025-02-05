@@ -2,11 +2,8 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Cube : MonoBehaviour
+public class Cube : Object
 {
-    [SerializeField] private float _minCount = 2.0f;
-    [SerializeField] private float _maxCount = 5.0f;
-
     private bool _isTouched = false;
 
     public event Action<Cube> Counted;
@@ -28,20 +25,15 @@ public class Cube : MonoBehaviour
 
                 GetComponent<Renderer>().material.color = UnityEngine.Random.ColorHSV();
                 
-                StartCoroutine();
+                StartCoroutine(Count());
             }
         }
     }
 
-    private void StartCoroutine()
-    {
-        StartCoroutine(Count());
-    }
-
     private IEnumerator Count()
     {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(_minCount, _maxCount + 1));
-        
+        yield return new WaitForSeconds(UnityEngine.Random.Range(MinCount, MaxCount));
+
         Counted?.Invoke(this);
-    }    
+    }
 }
