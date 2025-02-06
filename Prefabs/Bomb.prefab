@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3697598956098555427}
   - component: {fileID: 4789109714188847608}
   - component: {fileID: 8707945094304319529}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,3 +148,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _explosionRadius: 300
   _explosionForce: 100
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 192

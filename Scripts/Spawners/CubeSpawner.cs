@@ -16,11 +16,13 @@ public class CubeSpawner : Spawner<Cube>
 
     private IEnumerator Count() 
     {
+        var wait = new WaitForSeconds(_repeatRate);
+
         while (enabled)
         {
             GetObject();
 
-            yield return new WaitForSeconds(_repeatRate);
+            yield return wait;
         }
     }
 

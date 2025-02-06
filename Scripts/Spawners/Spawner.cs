@@ -4,15 +4,16 @@ using UnityEngine.Pool;
 
 public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 {
-    [SerializeField] protected T _prefab;
+    [SerializeField] private T _prefab;
 
     private ObjectPool<T> _pool;
 
-    public int Created { get; private set; } = 0;
     public int Spawned => GetSpawned();
     public int Active => GetActive();
 
     public event Action<T> ObjectCreated;
+
+    public int Created { get; private set; } = 0;
 
     private void Awake()
     {
@@ -41,7 +42,7 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
         Created++;
     }
 
-    protected T CreateObject()
+    private T CreateObject()
     {
         T obj = Instantiate(_prefab);
 
@@ -52,21 +53,11 @@ public abstract class Spawner<T> : MonoBehaviour where T : MonoBehaviour
 
     private int GetSpawned()
     {
-        int minValue = 0;
-
-        if (_pool == null)
-            return minValue;
-
-        return _pool.CountAll;
+        return _pool?.CountAll??0;
     }
 
     private int GetActive()
     {
-        int minValue = 0;
-
-        if ( _pool == null )
-            return minValue;
-
-        return _pool.CountActive;
+        return _pool?.CountActive??0;
     }
 }

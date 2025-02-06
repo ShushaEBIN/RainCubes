@@ -7,14 +7,14 @@ public class Counter<T> : MonoBehaviour where T : MonoBehaviour
     private const string Spawned = "Spawned: ";
     private const string Active = "Active: ";
 
-    [SerializeField] protected Spawner<T> _spawner;
-    [SerializeField] protected Text _created;
-    [SerializeField] protected Text _spawned;
-    [SerializeField] protected Text _active;
+    [SerializeField] private Spawner<T> _spawner;
+    [SerializeField] private Text _created;
+    [SerializeField] private Text _spawned;
+    [SerializeField] private Text _active;
     
-    protected int _createdObjects = 0;
-    protected int _spawnedObjects = 0;
-    protected int _activeObjects = 0;
+    private int _createdObjects = 0;
+    private int _spawnedObjects = 0;
+    private int _activeObjects = 0;
 
     private void OnEnable()
     {
@@ -26,25 +26,25 @@ public class Counter<T> : MonoBehaviour where T : MonoBehaviour
         _spawner.ObjectCreated -= UpdateUI;
     }
 
-    protected void UpdateCreated()
+    private void UpdateCreated()
     {
         _createdObjects = _spawner.Created;
         _created.text = Created + _createdObjects;
     }
 
-    protected void UpdateSpawned()
+    private void UpdateSpawned()
     {
         _spawnedObjects = _spawner.Spawned;
         _spawned.text = Spawned + _spawnedObjects;
     }
 
-    protected void UpdateActive()
+    private void UpdateActive()
     {
         _activeObjects = _spawner.Active;
         _active.text = Active + _activeObjects;
     }
 
-    protected void UpdateUI(T obj)
+    private void UpdateUI(T obj)
     {
         UpdateCreated();
         UpdateSpawned();

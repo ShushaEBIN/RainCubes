@@ -7,6 +7,7 @@ public class Bomb : Object
 {
     [SerializeField] private float _explosionRadius;
     [SerializeField] private float _explosionForce;
+    [SerializeField] private LayerMask _layerMask;
 
     private float _startAlpha = 1f;
     private float _targetAlpha = 0f;
@@ -49,24 +50,29 @@ public class Bomb : Object
     {     
         foreach (Rigidbody explodableObject in GetExplodableObjects())
         {
-            explodableObject.AddExplosionForce(_explosionForce, this.transform.position, _explosionRadius);
+            explodableObject.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
         }
     }
 
     private List<Rigidbody> GetExplodableObjects()
     {
-        Collider[] hits = Physics.OverlapSphere(this.transform.position, _explosionRadius);
+        Collider[] hits = Physics.OverlapSphere(transform.position, _explosionRadius, _layerMask);
 
         List<Rigidbody> objects = new List<Rigidbody>();
 
         foreach (Collider hit in hits)
         {
-            if (hit.attachedRigidbody != null)
+            if (CheckLayerMask(hit.gameObject, _layerMask) && hit.attachedRigidbody != null)
             {
                 objects.Add(hit.attachedRigidbody);
             }
         }
 
         return objects;
+    }
+
+    private bool CheckLayerMask(GameObject gameObject, LayerMask layerMask)
+    {
+        return ((1 << gameObject.layer) &  layerMask) != 0;
     }
 }
